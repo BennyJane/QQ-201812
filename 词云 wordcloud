@@ -2,9 +2,9 @@ import re
 import datetime
 import matplotlib.pyplot as plt
 import jieba
-from wordcloud import Wordcloud, STOPWORDS
-from seaborn import sns
-from PIL import Iamge
+from wordcloud import WordCloud,STOPWORDS
+import seaborn as sns
+from PIL import Image
 import numpy as np
 
 #Days WeekDays的表格，两者都会使用聊天信息里边时间的一部分
