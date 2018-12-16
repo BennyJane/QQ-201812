@@ -58,7 +58,6 @@ def get_content(date):
     content = re.findall(pa,data)
     get_wordcloud(content)
 
-
 #调用主函数
 def main():
     filename = "228.txt"
