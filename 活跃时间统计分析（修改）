@@ -1,0 +1,38 @@
+import re
+import xlsxwriter #需要安装模块 xlsxWriter
+
+# 获取24个时间段----->time_list
+# 用于之后时间的分段
+time_list = []
+for i in range(0, 24):
+    # 这里的判断用于将类似的‘8’ 转化为 ‘08’ 便于和导出数据匹配
+    time_list.append("%02d"%i)
+#print(time_list)
+
+#  创建EXCEL表格并设置参数
+workbook = xlsxwriter.Workbook('1206-120902.xlsx')
+worksheet = workbook.add_worksheet()
+worksheet.set_column('A:A', 5)
+worksheet.set_column('B:B', 10)
+
+# 打开文件，开始匹配“小时”数据，并计数保存
+# 这里记得要转换编码为utf-8
+#文件地址“/”，不是“\”,必须带文件格式".txt"
+
+with open("F:/简历准备/优复数学/数据分析/优复01.txt", encoding='utf-8') as f:
+    data = f.read()
+    # 例如20:50:52，要匹配其中的20
+    pa = re.compile(r"(\d\d):\d\d:\d\d")
+    #r"(\d\d):\d\d:\d\d" ------r 表示使用原来的含义，（\d\d）表示或取得对象；去掉后得到['23:03:31', '23:03:49', '23:03:57'.....]
+    times = re.findall(pa, data)
+    #经打印测试，times为['23','23','14','23','34'...] 列表，
+    for i in time_list:
+        num = times.count(i)
+        #求i在times中出现的次数
+        print(i, '--->', num)
+        worksheet.write(int(i), 0, str(i) + "点")
+        worksheet.write(int(i), 1, num)
+    # 记得关闭工作薄
+    workbook.close()
+    print(len(times))
+    print("处理完毕，快去看看文件夹下面新建的.xlsx文件吧")
